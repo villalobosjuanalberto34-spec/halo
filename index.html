@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#000000">
+    <title>Device Panel</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div id="app">
+
+    <!-- MENÚ LATERAL -->
+    <aside id="sidebar">
+
+        <div class="sidebar-top">
+            <div class="logo">DEVICE PANEL</div>
+            <button id="closeMenu" class="icon-btn">×</button>
+        </div>
+
+        <div class="menu">
+
+            <button class="menu-item active" data-page="screens">
+                <span>▣</span>
+                <span>Pantallas</span>
+            </button>
+
+            <button class="menu-item" data-page="connect">
+                <span>＋</span>
+                <span>Conectar</span>
+            </button>
+
+            <button class="menu-item" data-page="activity">
+                <span>◷</span>
+                <span>Actividad</span>
+            </button>
+
+            <button class="menu-item" data-page="settings">
+                <span>⚙</span>
+                <span>Configuración</span>
+            </button>
+
+        </div>
+
+        <div class="sidebar-bottom">
+            <div class="connection">
+                <span id="connectionDot"></span>
+                <span id="connectionText">Desconectado</span>
+            </div>
+        </div>
+
+    </aside>
+
+    <div id="overlay"></div>
+
+    <!-- CONTENIDO -->
+    <main>
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+
+            <button id="menuButton" class="menu-button">
+                ☰
+            </button>
+
+            <div>
+                <h1 id="pageTitle">Pantallas</h1>
+                <p id="pageSubtitle">Dispositivos conectados</p>
+            </div>
+
+        </header>
+
+
+        <!-- ================= PANTALLAS ================= -->
+
+        <section id="page-screens" class="page active">
+
+            <div class="page-head">
+                <div>
+                    <h2>Pantallas</h2>
+                    <p>Administra las sesiones de pantalla autorizadas.</p>
+                </div>
+
+                <button id="refreshDevices" class="white-btn">
+                    Actualizar
+                </button>
+            </div>
+
+            <div id="deviceList" class="device-list">
+
+                <div id="emptyDevices" class="empty">
+                    <div class="empty-icon">▣</div>
+                    <h3>No hay dispositivos</h3>
+                    <p>Conecta un teléfono para verlo aquí.</p>
+                    <button id="goConnect" class="white-btn">
+                        Conectar dispositivo
+                    </button>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= CONECTAR ================= -->
+
+        <section id="page-connect" class="page">
+
+            <div class="page-head">
+                <div>
+                    <h2>Conectar</h2>
+                    <p>Vincula otro teléfono mediante un código.</p>
+                </div>
+            </div>
+
+            <div class="connect-grid">
+
+                <div class="card">
+
+                    <div class="card-icon">＋</div>
+
+                    <h3>Generar código</h3>
+
+                    <p>
+                        Genera un código temporal para que otro
+                        teléfono pueda solicitar conexión.
+                    </p>
+
+                    <button id="generateCode" class="white-btn big">
+                        Generar código
+                    </button>
+
+                    <div id="generatedCode" class="generated-code hidden">
+                        <span>Código</span>
+                        <strong id="codeValue">------</strong>
+
+                        <button id="copyCode" class="dark-btn">
+                            Copiar código
+                        </button>
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="card-icon">↗</div>
+
+                    <h3>Introducir código</h3>
+
+                    <p>
+                        Introduce el código mostrado en el otro
+                        dispositivo.
+                    </p>
+
+                    <input
+                        id="pairCodeInput"
+                        class="input"
+                        type="text"
+                        inputmode="numeric"
+                        maxlength="6"
+                        placeholder="Código de 6 números"
+                    >
+
+                    <input
+                        id="deviceNameInput"
+                        class="input"
+                        type="text"
+                        maxlength="30"
+                        placeholder="Nombre del dispositivo"
+                    >
+
+                    <button id="connectDevice" class="white-btn big">
+                        Conectar
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div id="connectMessage" class="message"></div>
+
+        </section>
+
+
+        <!-- ================= ACTIVIDAD ================= -->
+
+        <section id="page-activity" class="page">
+
+            <div class="page-head">
+
+                <div>
+                    <h2>Actividad</h2>
+                    <p>Eventos de los dispositivos conectados.</p>
+                </div>
+
+                <button id="clearActivity" class="dark-btn">
+                    Limpiar
+                </button>
+
+            </div>
+
+            <div id="activityList" class="activity-list">
+
+                <div class="empty">
+                    <div class="empty-icon">◷</div>
+                    <h3>Sin actividad</h3>
+                    <p>Aquí aparecerán las conexiones y eventos.</p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= CONFIGURACIÓN ================= -->
+
+        <section id="page-settings" class="page">
+
+            <div class="page-head">
+
+                <div>
+                    <h2>Configuración</h2>
+                    <p>Configuración de Device Panel.</p>
+                </div>
+
+            </div>
+
+            <div class="settings-list">
+
+                <div class="setting">
+
+                    <div>
+                        <strong>Animaciones</strong>
+                        <p>Usar animaciones en el panel.</p>
+                    </div>
+
+                    <label class="switch">
+                        <input id="animationsToggle" type="checkbox" checked>
+                        <span></span>
+                    </label>
+
+                </div>
+
+                <div class="setting">
+
+                    <div>
+                        <strong>Notificaciones</strong>
+                        <p>Mostrar avisos de conexión.</p>
+                    </div>
+
+                    <label class="switch">
+                        <input id="notificationsToggle" type="checkbox" checked>
+                        <span></span>
+                    </label>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= MODAL PANTALLA ================= -->
+
+    <div id="screenModal" class="modal hidden">
+
+        <div class="modal-box">
+
+            <button id="closeScreenModal" class="modal-close">
+                ×
+            </button>
+
+            <h2 id="screenModalTitle">
+                Pantalla
+            </h2>
+
+            <div class="screen-container">
+
+                <video
+                    id="remoteScreen"
+                    autoplay
+                    playsinline
+                    controls
+                ></video>
+
+                <div id="screenPlaceholder">
+                    <span>▣</span>
+                    <p>La pantalla no está compartiéndose.</p>
+                </div>
+
+            </div>
+
+            <div class="screen-controls">
+
+                <button id="stopRemoteScreen" class="white-btn">
+                    Detener pantalla
+                </button>
+
+                <button id="timerRemoteScreen" class="dark-btn">
+                    Temporizador
+                </button>
+
+            </div>
+
+            <div id="timerBox" class="timer-box hidden">
+
+                <button data-time="30">30 segundos</button>
+                <button data-time="60">1 minuto</button>
+                <button data-time="300">5 minutos</button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- TOAST -->
+
+    <div id="toastContainer"></div>
+
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>
